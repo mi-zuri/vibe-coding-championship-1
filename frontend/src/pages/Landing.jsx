@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Shell } from '../components/Layout.jsx';
+import LonelinessMap from '../components/LonelinessMap.jsx';
 
 export default function Landing() {
   return (
@@ -112,8 +113,11 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* MAP */}
+      <LonelinessMap />
+
       {/* KNOWLEDGE */}
-      <section className="section section-alt" id="wiedza">
+      <section className="section" id="wiedza">
         <div className="wrap">
           <div className="section-head">
             <div>
