@@ -1,6 +1,6 @@
 # Obecność
 
-A platform connecting volunteers with lonely seniors, built for **Stowarzyszenie mali bracia Ubogich (mbU)** in under 2 hours during a Vibe Coding Championship.
+A platform connecting volunteers with lonely seniors, built for **Stowarzyszenie mali bracia Ubogich (mbU)** in under 2 hours during a Vibe Coding Championship (8th place).
 
 **Available at: https://vibe-coding-championship-1.zur-i.com**
 
