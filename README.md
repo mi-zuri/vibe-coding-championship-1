@@ -1,13 +1,14 @@
 # Obecność
 
-A platform connecting volunteers with lonely seniors, built for
-**Stowarzyszenie mali bracia Ubogich (mbU)**.
+A platform connecting volunteers with lonely seniors, built for **Stowarzyszenie mali bracia Ubogich (mbU)** in under 2 hours during a Vibe Coding Championship.
 
-Production: https://mi.zur-i.com
+**Available at: https://vibe-coding-championship-1.zur-i.com**
 
-![Obecność landing page — headline "Bądź obok. Każdy dzień ma znaczenie." with a sidebar for seniors and families](docs/images/landing.png)
+---
 
-> Built in under 2 hours for a Vibe Coding Championship.
+![Obecność landing page](docs/images/landing.png)
+
+---
 
 ## Quickstart
 
@@ -44,7 +45,3 @@ changes run `make reset-db` locally. Production has no migrations — coordinate
 ## Deploy
 
 `git push origin main` → GitHub Actions deploys to EC2 (~26s). Watch with `gh run watch`.
-
-## Contact
-
-Project for mbU, contact: michal.zurawski02@gmail.com.
