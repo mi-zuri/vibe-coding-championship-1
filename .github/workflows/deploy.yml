@@ -16,7 +16,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             set -e
-            cd ~/app-mi
+            cd ~/app-vibe-coding-championship-1
             git fetch origin main
             git reset --hard origin/main
             git clean -fd
@@ -26,8 +26,8 @@ jobs:
             cd frontend
             npm install
             npm run build
-            sudo rm -rf /var/www/mi/*
-            sudo cp -r dist/* /var/www/mi/
-            sudo chown -R www-data:www-data /var/www/mi
+            sudo rm -rf /var/www/vibe-coding-championship-1/*
+            sudo cp -r dist/* /var/www/vibe-coding-championship-1/
+            sudo chown -R www-data:www-data /var/www/vibe-coding-championship-1
 
             docker image prune -f

@@ -40,7 +40,7 @@ Zakładam, że znasz podstawy terminala i Gita. Nic więcej.
        │  EC2 (Ubuntu)                            │
        │  ┌────────────────┐                      │
        │  │  Nginx :443    │                      │
-       │  │   ├ /          → /var/www/mi/*       │
+       │  │   ├ /          → /var/www/vibe-coding-championship-1/*       │
        │  │   └ /api/*     → 127.0.0.1:3001      │
        │  └───────┬────────┘                      │
        │          │                               │
@@ -487,7 +487,7 @@ React Router **symuluje** nawigację w przeglądarce:
 Użytkownik jest na `/dashboard`, wciska F5 (odśwież). Teraz przeglądarka
 **wysyła request HTTP** `GET /dashboard` do serwera.
 
-Problem: na serwerze nie ma pliku `/var/www/mi/dashboard`. Nginx zwraca 404.
+Problem: na serwerze nie ma pliku `/var/www/vibe-coding-championship-1/dashboard`. Nginx zwraca 404.
 
 ### 9.3 Rozwiązanie — fallback na `index.html`
 
@@ -628,14 +628,14 @@ Nginx stoi na porcie 443, odbiera wszystkie requesty, i decyduje:
   tysiące równolegle.
 - Nginx ma wbudowany gzip, cache, rate-limit, access log.
 
-### 11.2 Nasza konfiguracja (`/etc/nginx/sites-available/mi`)
+### 11.2 Nasza konfiguracja (`/etc/nginx/sites-available/vibe-coding-championship-1`)
 
 ```nginx
 server {
     listen 80;
     server_name vibe-coding-championship-1.zur-i.com;
 
-    root /var/www/mi;
+    root /var/www/vibe-coding-championship-1;
     index index.html;
 
     location /api/ {
@@ -656,7 +656,7 @@ server {
 ### 11.3 Aktywacja
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/mi /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/vibe-coding-championship-1 /etc/nginx/sites-enabled/
 sudo nginx -t              # sprawdź składnię
 sudo systemctl reload nginx
 ```
@@ -681,7 +681,7 @@ sudo certbot --nginx -d vibe-coding-championship-1.zur-i.com
 Certbot:
 1. Sprawdza że serwer nasłuchuje na `vibe-coding-championship-1.zur-i.com` (odpowiada na `.well-known/acme-challenge/...`).
 2. Let's Encrypt wystawia certyfikat ważny 90 dni.
-3. Certbot **modyfikuje twój `/etc/nginx/sites-available/mi`** dodając
+3. Certbot **modyfikuje twój `/etc/nginx/sites-available/vibe-coding-championship-1`** dodając
    `listen 443 ssl`, ścieżki do certyfikatu, i przekierowanie `80 → 443`.
 4. Dodaje do cron/systemd timer auto-odnawianie (`certbot renew`).
 
@@ -748,7 +748,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             set -e
-            cd ~/app-mi
+            cd ~/app-vibe-coding-championship-1
             git fetch origin main
             git reset --hard origin/main
             git clean -fd
@@ -758,9 +758,9 @@ jobs:
             cd frontend
             npm install
             npm run build
-            sudo rm -rf /var/www/mi/*
-            sudo cp -r dist/* /var/www/mi/
-            sudo chown -R www-data:www-data /var/www/mi
+            sudo rm -rf /var/www/vibe-coding-championship-1/*
+            sudo cp -r dist/* /var/www/vibe-coding-championship-1/
+            sudo chown -R www-data:www-data /var/www/vibe-coding-championship-1
 
             docker image prune -f
 ```
@@ -793,10 +793,10 @@ to akceptowalne.
 **`npm install && npm run build`** — buduje frontend lokalnie na serwerze.
 Output idzie do `frontend/dist/`.
 
-**`sudo rm -rf /var/www/mi/* && sudo cp -r dist/* /var/www/mi/`** — tu jest
-mała **dziura atomowości**. Przez chwilę `/var/www/mi/` jest puste — jak user
+**`sudo rm -rf /var/www/vibe-coding-championship-1/* && sudo cp -r dist/* /var/www/vibe-coding-championship-1/`** — tu jest
+mała **dziura atomowości**. Przez chwilę `/var/www/vibe-coding-championship-1/` jest puste — jak user
 w tym nanosekundowym okienku odświeży stronę, dostanie 404. Profesjonalne
-rozwiązanie: skopiuj do `/var/www/mi-new`, potem `mv` atomowo.
+rozwiązanie: skopiuj do `/var/www/vibe-coding-championship-1-new`, potem `mv` atomowo.
 
 **`docker image prune -f`** — usuwa niekuse obrazy. Inaczej po 50 deployach
 masz 50 starych wersji zajmujących dysk.
@@ -816,7 +816,7 @@ kroki.
 Ręczny deploy:
 ```bash
 ssh ubuntu@vibe-coding-championship-1.zur-i.com
-cd ~/app-mi && git pull && docker compose up -d --build && ...
+cd ~/app-vibe-coding-championship-1 && git pull && docker compose up -d --build && ...
 ```
 
 Działa dla jednej osoby. Dla zespołu 3 osób to już:
@@ -918,7 +918,7 @@ Zamiast EC2 + ręcznego stacka:
 - [ ] Wynajmij EC2 (albo VPS), otwórz porty 22/80/443.
 - [ ] Utwórz non-root usera, wyłącz password auth SSH.
 - [ ] Zainstaluj Docker + Node + Nginx + Certbot na serwerze.
-- [ ] Sklonuj repo do `~/app-mi`, wrzuć `.env`.
+- [ ] Sklonuj repo do `~/app-vibe-coding-championship-1`, wrzuć `.env`.
 - [ ] Napisz `nginx.conf`, symlinkuj do `sites-enabled`.
 - [ ] `sudo nginx -t && systemctl reload nginx`.
 - [ ] `sudo certbot --nginx -d vibe-coding-championship-1.zur-i.com`.
