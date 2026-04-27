@@ -6,7 +6,7 @@ A platform connecting volunteers with lonely seniors, built for **Stowarzyszenie
 
 ---
 
-![Obecność landing page](docs/images/landing.png)
+![Obecność landing page](docs/images/preview.png)
 
 ---
 
